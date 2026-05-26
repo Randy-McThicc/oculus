@@ -39,7 +39,8 @@ This checklist is the single source of truth — update it as we go.
 - [x] **Day 3 — Page.** `templates/index.html.j2` + `public/style.css`; render real HTML; view in browser.
 - [x] **Day 4 — Publish.** git basics, GitHub repo, GitHub Pages → first public URL.
 - [x] **Day 5 — Automation.** GitHub Actions hourly cron → site updates itself 24/7.
-- [ ] **Day 6+ (optional).** AI summaries (Claude API), keyword filters, agents, monetization.
+- [~] **Day 6 (in progress).** Curated AI-only feeds + keyword filter + entity cleanup + dates.
+      Still optional/future: AI summaries (Claude API), GitHub/Reddit sources, agents, monetization.
 
 (Full detailed plan also saved at: ~/.claude/plans/hello-i-structured-beaver.md)
 
@@ -92,7 +93,24 @@ This checklist is the single source of truth — update it as we go.
 - GitHub Trending feed: deferred. No official RSS (web page only). Options when revisited:
   community RSS bridge (mshibanami/GitHubTrendingRSS, drop-in) OR GitHub API (JSON, needs new
   non-RSS code path in build.py — good Day 6 lesson).
-- Next (Day 6+, optional): AI summaries via Claude API, keyword filters, more sources, agents,
-  monetization.
+- Day 6 (started 2026-05-26): CONTENT QUALITY pass. Curated feeds.json to 7 verified reputable
+  AI sources (all live-tested): OpenAI, Google DeepMind, Hugging Face, MIT Tech Review (AI TOPIC
+  feed, not the general one), MarkTechPost, TLDR AI -- all `always_keep:true` -- plus Ars
+  Technica (no flag => keyword-filtered to AI only). Dropped AINews/smol.ai + VentureBeat per
+  Boss. Anthropic still has NO RSS (404). The Verge still omitted.
+  build.py additions: (1) html.unescape() cleans titles (&#8216; etc.); (2) keyword filter --
+  trusted feeds pass through, others must match a keyword; uses WHOLE-WORD regex `\b(...)\b` to
+  avoid "ai"-inside-"claims"/"failing" false positives (real bug we hit + fixed); (3) per-story
+  relative "3h ago" age via calendar.timegm(published_parsed) vs time.time(). Template shows
+  `.age` as dim-green "// 3h ago"; style.css updated to match Matrix theme.
+  Concepts available to teach next: regex word boundaries, html entities, UTC time math.
+- Twitter/X tradeoff (taught): no free public RSS since 2023. We capture X signal INDIRECTLY via
+  digest feeds (TLDR AI now in feeds; AINews/smol.ai is an option). Direct X = paid API ~$100+/mo.
+- NEXT STEPS documented in plan file ~/.claude/plans/so-the-most-sorted-rabin.md (turnkey URLs):
+  GitHub release feeds (OWNER/REPO/releases.atom for ollama/vllm/transformers/llama.cpp; reliable,
+  always_keep), GitHub Trending bridge (mshibanami.github.io/GitHubTrendingRSS, keyword-filtered),
+  Reddit subreddit .rss (NEEDS custom User-Agent -- Reddit blocks bots; expect occasional 429 on
+  Actions IPs), arXiv cs.AI papers (export.arxiv.org/rss/cs.AI; high volume/academic).
+- Still future/optional: AI summaries via Claude API, agents, monetization.
 - Tooling: Python 3.9.6, git, Homebrew, and `gh` 2.92.0 all installed; gh authed as
   Randy-McThicc. Run brew/gh in non-login shells via: eval "$(/opt/homebrew/bin/brew shellenv)".

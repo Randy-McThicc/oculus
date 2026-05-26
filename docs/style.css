@@ -72,6 +72,16 @@ a.title:hover {
 .source::before { content: "<"; }
 .source::after  { content: ">"; }
 
+/* Relative publish time, e.g. "3h ago" */
+.age {
+  color: #1f8f44;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  opacity: 0.85;
+}
+
+.age::before { content: "// "; }
+
 /* ===== Footer ===== */
 footer {
   margin-top: 2rem;

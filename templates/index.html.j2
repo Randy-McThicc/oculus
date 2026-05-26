@@ -18,6 +18,7 @@
       <li>
         <a class="title" href="{{ story.link }}">{{ story.title }}</a>
         <span class="source">{{ story.source }}</span>
+        {% if story.age %}<span class="age">{{ story.age }}</span>{% endif %}
       </li>
       {% endfor %}
     </ol>
