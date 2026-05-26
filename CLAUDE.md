@@ -37,7 +37,7 @@ This checklist is the single source of truth — update it as we go.
 - [x] **Day 1 — Scaffolding.** CLAUDE.md, feeds.json, requirements.txt; deps installed.
 - [x] **Day 2 — `build.py` (fetch).** Read feeds, fetch RSS, dedupe, sort, print stories.
 - [x] **Day 3 — Page.** `templates/index.html.j2` + `public/style.css`; render real HTML; view in browser.
-- [ ] **Day 4 — Publish.** git basics, GitHub repo, GitHub Pages → first public URL.
+- [x] **Day 4 — Publish.** git basics, GitHub repo, GitHub Pages → first public URL.
 - [ ] **Day 5 — Automation.** GitHub Actions hourly cron → site updates itself 24/7.
 - [ ] **Day 6+ (optional).** AI summaries (Claude API), keyword filters, agents, monetization.
 
@@ -67,6 +67,15 @@ This checklist is the single source of truth — update it as we go.
   Jinja2 templates ({{ }} insert vs {% %} action), separating structure/style/data, writing
   files in "w" mode, datetime timestamp.
 - Style status: Boss is happy with font for now; LAYOUT tweaks deferred to later (not urgent).
-- Next (Day 4): publish online — git basics, create GitHub repo, enable GitHub Pages → first
-  public URL. NOTE: `gh` CLI not installed yet (may need to install or use the web UI).
-- Tooling: Python 3.9.6 + git present; `gh` not installed yet.
+- Day 4 DONE: site is LIVE. Repo: https://github.com/Randy-McThicc/oculus (public). Live URL:
+  https://randy-mcthicc.github.io/oculus/ . Did: git init, repo-local identity (name "Boss",
+  email = GitHub private noreply), .gitignore, first commit, `gh repo create --push`, enabled
+  Pages from main /docs. Output folder renamed public/ -> docs/ (Pages deploy-from-branch only
+  serves root or /docs). Concepts taught: git vs GitHub vs Pages, add/commit/push, branches,
+  remotes/origin, .gitignore, private commit email, deploy-from-branch constraint.
+- IMPORTANT: site does NOT yet auto-update. It only refreshes when we run `build.py` and
+  `git add/commit/push` the new docs/index.html. Making it refresh itself hourly = Day 5.
+- Next (Day 5): GitHub Actions workflow on an hourly cron to run build.py and publish, so the
+  site updates 24/7 without Boss's laptop. (gh token already has `workflow` scope.)
+- Tooling: Python 3.9.6, git, Homebrew, and `gh` 2.92.0 all installed; gh authed as
+  Randy-McThicc. Run brew/gh in non-login shells via: eval "$(/opt/homebrew/bin/brew shellenv)".
