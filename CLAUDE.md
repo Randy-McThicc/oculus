@@ -6,7 +6,7 @@ This project doubles as a hands-on course for learning how Claude Code works.
 ## What it does (target design)
 1. `build.py` reads `feeds.json` (a list of RSS news sources)
 2. fetches + dedupes + sorts the latest stories
-3. renders a static page to `public/index.html`
+3. renders a static page to `docs/index.html` (GitHub Pages serves from /docs)
 4. (later) published via GitHub Pages, refreshed hourly by a GitHub Actions cron
 
 Key idea: **Claude Code is the builder, not the runner.** A scheduler runs the program 24/7 —
@@ -15,15 +15,15 @@ not a laptop.
 ## How to run (local)
 ```bash
 pip3 install -r requirements.txt   # one time
-python3 build.py                   # regenerates public/index.html
-open public/index.html             # view in browser (macOS)
+python3 build.py                   # regenerates docs/index.html
+open docs/index.html               # view in browser (macOS)
 ```
 
 ## Layout
 - `feeds.json` — the news sources (safe for a human to edit; no coding needed)
 - `build.py` — the fetch + render engine
 - `templates/index.html.j2` — page template (added Day 3)
-- `public/` — generated output served to visitors
+- `docs/` — generated output served to visitors (GitHub Pages source folder)
 - `requirements.txt` — Python dependencies
 
 ## Conventions

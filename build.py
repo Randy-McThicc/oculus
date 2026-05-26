@@ -68,9 +68,9 @@ html = template.render(
     updated=datetime.now().strftime("%Y-%m-%d %H:%M"),
 )
 
-# Write the finished page to public/index.html
-os.makedirs("public", exist_ok=True)
-with open("public/index.html", "w") as f:
+# Write the finished page to docs/index.html (GitHub Pages serves from /docs)
+os.makedirs("docs", exist_ok=True)
+with open("docs/index.html", "w") as f:
     f.write(html)
 
-print("Wrote public/index.html")
+print("Wrote docs/index.html")
