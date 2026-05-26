@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Radar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>AI Radar</h1>
+    <p class="subtitle">The latest AI &amp; tech headlines. Updated {{ updated }}.</p>
+  </header>
+
+  <main>
+    <ol class="stories">
+      {% for story in stories %}
+      <li>
+        <a class="title" href="{{ story.link }}">{{ story.title }}</a>
+        <span class="source">{{ story.source }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+
+  <footer>
+    <p>Built by AI Radar &middot; {{ count }} stories from {{ feed_count }} sources.</p>
+  </footer>
+</body>
+</html>
