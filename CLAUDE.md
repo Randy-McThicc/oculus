@@ -38,7 +38,7 @@ This checklist is the single source of truth — update it as we go.
 - [x] **Day 2 — `build.py` (fetch).** Read feeds, fetch RSS, dedupe, sort, print stories.
 - [x] **Day 3 — Page.** `templates/index.html.j2` + `public/style.css`; render real HTML; view in browser.
 - [x] **Day 4 — Publish.** git basics, GitHub repo, GitHub Pages → first public URL.
-- [ ] **Day 5 — Automation.** GitHub Actions hourly cron → site updates itself 24/7.
+- [x] **Day 5 — Automation.** GitHub Actions hourly cron → site updates itself 24/7.
 - [ ] **Day 6+ (optional).** AI summaries (Claude API), keyword filters, agents, monetization.
 
 (Full detailed plan also saved at: ~/.claude/plans/hello-i-structured-beaver.md)
@@ -75,7 +75,24 @@ This checklist is the single source of truth — update it as we go.
   remotes/origin, .gitignore, private commit email, deploy-from-branch constraint.
 - IMPORTANT: site does NOT yet auto-update. It only refreshes when we run `build.py` and
   `git add/commit/push` the new docs/index.html. Making it refresh itself hourly = Day 5.
-- Next (Day 5): GitHub Actions workflow on an hourly cron to run build.py and publish, so the
-  site updates 24/7 without Boss's laptop. (gh token already has `workflow` scope.)
+- Day 5 DONE: site now auto-updates 24/7. Added `.github/workflows/build.yml` — hourly cron
+  (`0 * * * *`) + manual `workflow_dispatch` button. Steps: checkout → setup-python 3.11 →
+  pip install -r requirements.txt → python build.py → commit+push docs/index.html only if it
+  changed (`git diff --staged --quiet` guard). Needs `permissions: contents: write` so the bot
+  can push (common gotcha). Verified via manual run: bot committed "Auto-update headlines" and
+  pushed with no laptop involved. Concepts taught: GitHub Actions (cloud robot + workflow file),
+  .github/workflows magic path, YAML (indent=nesting, no tabs), cron 5-field syntax, uses: vs
+  run:, fresh ephemeral runner, permissions, schedule is best-effort + disabled after 60d idle.
+- Also trimmed feeds.json: removed The Verge AI and Hacker News (HN-dominance goal). Now 4
+  feeds: OpenAI, Google DeepMind, Ars Technica, MIT Tech Review.
+- WORKFLOW CHANGE for Boss: the bot now commits to main on its own. ALWAYS `git pull` before
+  making/pushing local edits, or you'll hit "rejected (non-fast-forward)" conflicts.
+- Minor: GH warns actions/checkout@v4 + setup-python@v5 use Node 20 (deprecated June 2026).
+  Harmless now; bump action versions when convenient.
+- GitHub Trending feed: deferred. No official RSS (web page only). Options when revisited:
+  community RSS bridge (mshibanami/GitHubTrendingRSS, drop-in) OR GitHub API (JSON, needs new
+  non-RSS code path in build.py — good Day 6 lesson).
+- Next (Day 6+, optional): AI summaries via Claude API, keyword filters, more sources, agents,
+  monetization.
 - Tooling: Python 3.9.6, git, Homebrew, and `gh` 2.92.0 all installed; gh authed as
   Randy-McThicc. Run brew/gh in non-login shells via: eval "$(/opt/homebrew/bin/brew shellenv)".
